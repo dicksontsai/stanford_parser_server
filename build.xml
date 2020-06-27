@@ -178,9 +178,9 @@
 
     <!-- Include all JAR files that will be included in /WEB-INF/lib -->
     <!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
-    <!--
-    <pathelement location="${foo.jar}"/>
--->
+    <fileset dir="${basedir}/lib">
+      <include name="*.jar" />
+    </fileset>
 
     <!-- Include all elements that Tomcat exposes to applications -->
     <fileset dir="${catalina.home}/bin">
@@ -429,9 +429,9 @@
     <!-- Copy external dependencies as required -->
     <!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
     <mkdir dir="${build.home}/WEB-INF/lib" />
-    <!--
-    <copy todir="${build.home}/WEB-INF/lib" file="${foo.jar}"/>
--->
+    <copy todir="${build.home}/WEB-INF/lib">
+      <fileset dir="${basedir}/lib" />
+    </copy>
 
     <!-- Copy static files from external dependencies as needed -->
     <!-- *** CUSTOMIZE HERE AS REQUIRED BY YOUR APPLICATION *** -->
