@@ -1,10 +1,14 @@
 # Stanford Parser Server
 
-A simple Tomcat servlet that parses sentences.
+A simple Tomcat servlet that parses sentences. You can run this on localhost (default port is 8080).
 
-# Setup
+[Stanford NLP Local Extension](https://github.com/dicksontsai/stanford-nlp-local-extension)
+is a companion project that implements a Chrome Extension to send web content to this server.
+You can use this extension to get parse trees from highlighted text, for example.
 
-## Tomcat Setup
+## Setup
+
+### Tomcat Setup
 
 1. Download Tomcat from https://tomcat.apache.org/download-90.cgi
 1. Add `$CATALINA_HOME` to your `.bashrc`/`.zshrc` pointing to the downloaded directory.
@@ -27,7 +31,7 @@ A simple Tomcat servlet that parses sentences.
 
 1. Start the Tomcat server using `$CATALINA_HOME/bin/startup.sh`.
 
-## Repo Setup
+### Repo Setup
 
 1. Download Apache Ant from https://ant.apache.org/bindownload.cgi
    1. Install and add to your path. You should now have `$ANT_HOME` defined.
@@ -41,7 +45,17 @@ A simple Tomcat servlet that parses sentences.
    1. manager.password: `456`
    1. manager.url: Can leave blank. Defaults to `localhost:8080`.
 
-# Example Request
+### Stanford NLP Setup
+
+The `ivy.xml` file should already take care of fetching Stanford NLP's CoreNLP library. However, you will also need
+to download the parse model separately. Download the English model at https://nlp.stanford.edu/software/stanford-corenlp-4.0.0-models-english.jar
+and copy it to the `lib` directory.
+
+## Example Request
+
+Currently, the only supported endpoint is `POST http://localhost:8080/parser/parse`.
+* Input: sentence
+* Output: JSON object containing a `tree` field.
 
 ```
 $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "sentence=The quick brown fox jumps over the lazy dog" http://localhost:8080/parser/parse
