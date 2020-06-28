@@ -319,12 +319,6 @@
 
   <target name="dist" depends="compile,javadoc" description="Create binary distribution">
 
-    <!-- Copy documentation subdirectories -->
-    <mkdir dir="${dist.home}/docs" />
-    <copy todir="${dist.home}/docs">
-      <fileset dir="${docs.home}" />
-    </copy>
-
     <!-- Create application JAR file -->
     <jar jarfile="${dist.home}/${app.name}-${app.version}.war" basedir="${build.home}" />
 
@@ -452,6 +446,9 @@
   NOTE: The /WEB-INF/web.xml web application configuration file is not reread
   on a reload. If you have made changes to your web.xml file you must stop
   then start the web application.
+
+  TODO(dicksontsai): Figure out why this target does not work. Workaround: Run
+  remove, then run install.
 
 -->
 

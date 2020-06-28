@@ -30,7 +30,7 @@
     <description>
       This servlet parses sentences using the Stanford Parser.
     </description>
-    <servlet-class>com.dicksontsai.ParserServer</servlet-class>
+    <servlet-class>com.dicksontsai.parse.ParserServer</servlet-class>
     <!-- Load this servlet at server startup time -->
     <load-on-startup>5</load-on-startup>
   </servlet>
