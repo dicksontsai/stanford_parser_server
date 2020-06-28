@@ -48,6 +48,8 @@ public class ParserServer extends HttpServlet {
             throw new ServletException("Sentence not provided");
         }
 
+        sentence = sentence.replaceAll("[\\u2018\\u2019]", "'").replaceAll("[\\u201C\\u201D]", "\"");
+
         response.setContentType("application/json");
         response.setCharacterEncoding("utf-8");
 
