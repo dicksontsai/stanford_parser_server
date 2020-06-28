@@ -45,13 +45,13 @@ public class ParseAggregator {
 
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
-        json.append("tree", new JSONArray(this.trees));
+        json.put("tree", new JSONArray(this.trees));
 
         Map<String, JSONObject> posWordCountsJSON = new HashMap<>();
         for (Map.Entry<String, Map<String, Integer>> entry : posWordCounts.entrySet()) {
             posWordCountsJSON.put(entry.getKey(), new JSONObject(entry.getValue()));
         }
-        json.append("poscount", new JSONObject(posWordCountsJSON));
+        json.put("poscount", new JSONObject(posWordCountsJSON));
         return json;
     }
 }
