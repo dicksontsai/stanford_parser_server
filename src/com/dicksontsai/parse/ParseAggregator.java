@@ -29,7 +29,7 @@ public class ParseAggregator {
         List<Tree> leaves = tree.getLeaves();
         for (Tree leaf : leaves) {
             String pos = leaf.parent(tree).label().value();
-            String word = leaf.label().value();
+            String word = leaf.label().value().toLowerCase();
             Map<String, Integer> posWordCount = posWordCounts.get(pos);
             if (posWordCount == null) {
                 posWordCount = new HashMap<>();

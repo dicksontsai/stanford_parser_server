@@ -1,20 +1,22 @@
-# Stanford Parser Server
+# Stanford Parser Servlet
 
-A simple Tomcat servlet that parses sentences. You can run this on localhost (default port is 8080).
+A simple Java [servlet](https://javaee.github.io/javaee-spec/javadocs/javax/servlet/http/HttpServlet.html)
+that parses sentences based on Stanford NLP's parser. I use Java here, because
+Stanford CoreNLP is distributed as a `.jar` (Java archive) file.
 
 [Stanford NLP Local Extension](https://github.com/dicksontsai/stanford-nlp-local-extension)
 is a companion project that implements a Chrome Extension to send web content to this server.
 You can use this extension to get parse trees from highlighted text, for example.
 
-Unfortunately, Tomcat is not the easiest to set up.
+Below is one way of running this Java servlet through [Apache Tomcat](http://tomcat.apache.org/).
 
 ## Setup
 
 ### Tomcat Setup
 
-_The instructions here are not specific to this repo._
+_Tomcat is a Java servlet container. The instructions here are not specific to this repo._
 
-In this section, you will install and start a local Tomcat server (default port is 8080).
+In this section, you will install and start a local Tomcat server to serve this servlet (default port is 8080).
 
 1. Download Tomcat from https://tomcat.apache.org/download-90.cgi
 1. Add `$CATALINA_HOME` to your `.bashrc`/`.zshrc` pointing to the downloaded directory.
@@ -57,34 +59,10 @@ The `ivy.xml` file should already take care of fetching Stanford NLP's CoreNLP l
 to download the parse model separately. Download the English model at https://nlp.stanford.edu/software/stanford-corenlp-4.0.0-models-english.jar
 and copy it to the `lib` directory.
 
-### Build Servlet and Install to Tomcat
+## Build the Servlet and Install to Tomcat
 
 1. Run `ant install`.
-1. If you have made changes to the server, run `ant remove`, then `ant install`.
-   Unfortunately, I do not know why `ant reload` does not work.
-
-### VSCode Setup
-
-While you can run `ant` through the CLI, working with VSCode is very seamless.
-Install the `Ant Target Runner` and `Tomcat For Java` extensions.
-
-#### Debugging with Tomcat For Java
-
-You can add breakpoints to your code, then issue requests through cURL/your
-browser to step through the code line-by-line in VSCode's debugger.
-
-1. Click the plus sign ("Add Tomcat Server"). Choose `$CATALINA_HOME` from the Finder.
-   Now, you should see `$CATALINA_HOME` (in my case, \$CATALINA_HOME=apache-tomcat-9.0.36).
-1. You will need to shutdown your regular Tomcat (`$CATALINA_HOME/bin/shutdown.sh`),
-   because Tomcat For Java needs port 8080 as well. (I have yet to figure out how
-   to change the ports.)
-1. Run `ant dist` to create a `.war` file.
-1. Right-click `$CATALINA_HOME` under "Tomcat Servers" and select "Debug War Package".
-   Choose the `.war` package in the `dist` directory. The debugger should start to run.
-1. Issue a POST request using cURL or your browser. The request (**specifically for debugging**)
-   looks like `curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "sentence=The quick brown fox jumps over the lazy dog" http://localhost:8080/parser-0.1-dev/parse`.
-   Note the different context name from `Example Request` below.
-1. When you are done debugging, make sure to stop the debug server by right-clicking `$CATALINA_HOME` again.
+1. If you have made changes to the server, run `ant reload`.
 
 ## Example Request
 
@@ -99,3 +77,34 @@ $ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "sentence
 {"poscount":[{"DT":{"The":1,"the":1},"JJ":{"brown":1,"quick":1,"lazy":1},"NN":{"dog":1,"fox":1},"IN":{"over":1},"VBZ":{"jumps":1}}],
 "tree":[["(ROOT\n  (S\n    (NP (DT The) (JJ quick) (JJ brown) (NN fox))\n    (VP (VBZ jumps)\n      (PP (IN over)\n        (NP (DT the) (JJ lazy) (NN dog))))))\n"]]}
 ```
+
+## Configuring New Endpoints
+
+`build/WEB-INF/web.xml` has a mapping from routes to Java servlet classes. You
+can basically implement your own class and expose it there.
+
+## VSCode Setup
+
+While you can run `ant` through the CLI, working with VSCode is very seamless.
+Install the `Ant Target Runner` and `Tomcat For Java` extensions.
+
+### Debugging with `Tomcat For Java`
+
+With `Tomcat For Java`, you can add breakpoints to your code, then issue
+requests through cURL/your browser to step through the code line-by-line in
+VSCode's debugger.
+
+The `Tomcat For Java` extension shows up as `Tomcat Servers` under the Explorer.
+
+1. Click the plus sign (infotip says "Add Tomcat Server"). Choose `$CATALINA_HOME` from the Finder.
+   Now, you should see `$CATALINA_HOME` (in my case, \$CATALINA_HOME=apache-tomcat-9.0.36).
+1. You will need to shutdown your regular Tomcat (`$CATALINA_HOME/bin/shutdown.sh`),
+   because Tomcat For Java needs port 8080 as well. (I have yet to figure out how
+   to change the ports.)
+1. Run `ant dist` to create a `.war` file.
+1. Right-click `$CATALINA_HOME` under "Tomcat Servers" and select "Debug War Package".
+   Choose the `.war` package in the `dist` directory. The debugger should start to run.
+1. Issue a POST request using cURL or your browser. The request (**specifically for debugging**)
+   looks like `curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "sentence=The quick brown fox jumps over the lazy dog" http://localhost:8080/parser-0.1-dev/parse`.
+   Note the different context name from `Example Request` below.
+1. When you are done debugging, make sure to stop the debug server by right-clicking `$CATALINA_HOME` again.

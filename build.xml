@@ -450,13 +450,15 @@
   TODO(dicksontsai): Figure out why this target does not work. Workaround: Run
   remove, then run install.
 
--->
-
   <target name="reload" depends="compile" description="Reload application on servlet container">
 
     <reload url="${manager.url}" username="${manager.username}" password="${manager.password}" path="${app.path}" />
 
   </target>
+
+-->
+
+  <target name="reload" depends="remove,install" description="Reload application on servlet container"></target>
 
 
   <!-- ==================== Remove Target =================================== -->
