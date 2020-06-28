@@ -72,10 +72,10 @@ Currently, the only supported endpoint is `POST http://localhost:8080/parser/par
 - Output: JSON object containing a `tree` field and a `postcount` field.
 
 ```
-$ curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "sentence=The quick brown fox jumps over the lazy dog" http://localhost:8080/parser/parse
+curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "text=The quick brown fox jumps over the lazy dog" http://localhost:8080/parser/parse
 
-{"poscount":[{"DT":{"The":1,"the":1},"JJ":{"brown":1,"quick":1,"lazy":1},"NN":{"dog":1,"fox":1},"IN":{"over":1},"VBZ":{"jumps":1}}],
-"tree":[["(ROOT\n  (S\n    (NP (DT The) (JJ quick) (JJ brown) (NN fox))\n    (VP (VBZ jumps)\n      (PP (IN over)\n        (NP (DT the) (JJ lazy) (NN dog))))))\n"]]}
+{"poscount":{"DT":{"the":2},"JJ":{"brown":1,"quick":1,"lazy":1},"NN":{"dog":1,"fox":1},"IN":{"over":1},"VBZ":{"jumps":1}},
+"tree":["(ROOT\n  (S\n    (NP (DT The) (JJ quick) (JJ brown) (NN fox))\n    (VP (VBZ jumps)\n      (PP (IN over)\n        (NP (DT the) (JJ lazy) (NN dog))))))\n"]}
 ```
 
 ## Configuring New Endpoints
