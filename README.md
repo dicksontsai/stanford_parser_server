@@ -1,6 +1,8 @@
 # Stanford Parser Servlet
 
-I have moved the code in this repository to https://github.com/dicksontsai/stanford-nlp-local-extension.
+**I have moved the code in this repository to https://github.com/dicksontsai/stanford-nlp-local-extension.**
+
+## Background and Demo
 
 Stanford NLP Local Extension is a Chrome extension + local web server that
 parses any text you highlight into Penn syntax trees -- a neat way to study how
