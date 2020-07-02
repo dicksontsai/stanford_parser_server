@@ -8,8 +8,6 @@ Stanford NLP Local Extension is a Chrome extension + local web server that
 parses any text you highlight into Penn syntax trees -- a neat way to study how
 others write.
 
-![Extension demo](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/extension-demo.gif)
+![Highlight text](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/demo_highlight_text.png)
 
-Below is a screenshot showing the contents more clearly.
-
-![Extension screenshot](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/extension-screenshot.png)
+![Render parse trees](https://github.com/dicksontsai/stanford-nlp-local-extension/blob/master/demo_parse_tree.png)
